@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #chatbox {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 300px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+        #messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            border-bottom: 1px solid #ccc;
+        }
+        #input-container {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+        }
+        #input-field {
+            flex: 1;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #send-button {
+            padding: 5px 10px;
+            margin-left: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="chatbox">
+        <div id="messages"></div>
+        <div id="input-container">
+            <input type="text" id="input-field" placeholder="Type a message...">
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('send-button').addEventListener('click', function() {
+            const inputField = document.getElementById('input-field');
+            const messages = document.getElementById('messages');
+            const userMessage = inputField.value;
+
+            if (userMessage.trim() === '') return;
+
+            // Display user's message
+            const userMessageElement = document.createElement('div');
+            userMessageElement.textContent = You: ${userMessage};
+            messages.appendChild(userMessageElement);
+
+            // Simple bot response logic
+            const botMessageElement = document.createElement('div');
+            let botResponse = 'Sorry, I did not understand that.';
+
+            if (userMessage.toLowerCase().includes('hello')) {
+                botResponse = 'Hello! How can I help you today?';
+            } else if (userMessage.toLowerCase().includes('how are you')) {
+                botResponse = 'I am a bot, so I don\'t have feelings, but thanks for asking!';
+            }
+
+            botMessageElement.textContent = Bot: ${botResponse};
+            messages.appendChild(botMessageElement);
+
+            // Scroll to the bottom
+            messages.scrollTop = messages.scrollHeight;
+
+            // Clear the input field
+            inputField.value = '';
+        });
+
+        // Allow pressing "Enter" to send the message
+        document.getElementById('input-field').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('send-button').click();
+            }
+        });
+    </script>
+</body>
+</html>
